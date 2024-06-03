@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { getAllFiles } from '../src/getAllFiles.js';
 import { getConfigFile } from '../src/getConfigFile.js';
 import { getImportPaths } from '../src/getImportPaths.js';
 import { resolveImportPaths } from '../src/resolveImportPaths.js';
@@ -14,3 +15,6 @@ console.log(imports);
 
 const resolvedPath = resolveImportPaths(imports, baseUrl, paths);
 console.log(resolvedPath);
+
+const allFiles = getAllFiles('src');
+console.log(allFiles);
