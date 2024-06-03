@@ -1,0 +1,23 @@
+{
+  "name": "import-visualizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "import-visualizer": "./bin/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "HBSPS",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.13",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "json5": "^2.2.3"
+  }
+}
