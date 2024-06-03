@@ -7,7 +7,7 @@ export function getAllFiles(dirPath, arrayOfFiles) {
   arrayOfFiles = arrayOfFiles || [];
 
   files.forEach((file) => {
-    const filePath = path.join(dirPath, file);
+    const filePath = path.join(dirPath, file).replace(/\\/g, '/');
 
     if (fs.statSync(filePath).isDirectory()) {
       arrayOfFiles = getAllFiles(filePath, arrayOfFiles);

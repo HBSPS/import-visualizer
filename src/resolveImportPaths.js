@@ -7,7 +7,7 @@ function pathMapping(aliasPath, baseUrl, paths) {
     if (aliasPath.startsWith(aliasPrefix)) {
       const targetPrefix = targets[0].replace('*', '');
       const resolvedPath = aliasPath.replace(aliasPrefix, targetPrefix);
-      return path.join(baseUrl, resolvedPath);
+      return path.join(baseUrl, resolvedPath).replace(/\\/g, '/');
     }
   }
   return aliasPath;
