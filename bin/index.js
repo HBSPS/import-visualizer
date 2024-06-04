@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
+import open from 'open';
 import { appendExtensions } from '../src/appendExtensions.js';
 import { cliConfig } from '../src/cliConfig.js';
 import { getAllFiles } from '../src/getAllFiles.js';
 import { getConfigFile } from '../src/getConfigFile.js';
 import { getImportPaths } from '../src/getImportPaths.js';
 import { resolveImportPaths } from '../src/resolveImportPaths.js';
+import { cwd } from 'process';
+import { resolve } from 'path';
 
 const { root, targetDir } = cliConfig(process.argv.slice(2));
 
@@ -24,3 +27,6 @@ const allFiles = getAllFiles(targetDir);
 
 const resolvedPathWithExtensions = appendExtensions(resolvedPath, allFiles);
 console.log(resolvedPathWithExtensions);
+
+await open(resolve(process.argv[1], '../../index.html'));
+// console.log(resolve(process.argv[1], '../../index.html'));
