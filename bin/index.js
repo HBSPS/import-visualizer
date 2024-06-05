@@ -9,7 +9,6 @@ import { getAllFiles } from '../src/getAllFiles.js';
 import { getConfigFile } from '../src/getConfigFile.js';
 import { getImportPaths } from '../src/getImportPaths.js';
 import { resolveImportPaths } from '../src/resolveImportPaths.js';
-import { generateTemplate } from '../src/generateTemplate.js';
 
 const { root, targetDir } = cliConfig(process.argv.slice(2));
 
@@ -29,7 +28,4 @@ const allFiles = getAllFiles(targetDir);
 const resolvedPathWithExtensions = appendExtensions(resolvedPath, allFiles);
 console.log(resolvedPathWithExtensions);
 
-generateTemplate({ test: 123 });
-
 await open(resolve(process.argv[1], '../../index.html'));
-// console.log(resolve(process.argv[1], '../../index.html'));
