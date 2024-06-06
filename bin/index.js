@@ -2,6 +2,7 @@
 
 import open from 'open';
 import { resolve } from 'node:path';
+import fs from 'node:fs/promises';
 
 import { cliConfig } from '../src/cliConfig.js';
 import { getConfigFile } from '../src/getConfigFile.js';
@@ -16,4 +17,9 @@ const { baseUrl, paths } = compilerOptions;
 const fileTree = new FileTree(root, targetDir, baseUrl, paths);
 generateTemplate(fileTree.tree);
 
-await open(resolve(process.argv[1], '../../index.html'));
+const resultFilePath = resolve(process.argv[1], '../../index.html');
+await open(resultFilePath, { wait: true });
+
+console.log('Tree has been created. Check your browser.');
+
+await fs.unlink(resultFilePath);
