@@ -13,7 +13,7 @@ const template = (data) =>
     <div id="root"></div>
   </body>
   <script>const data = ${data}</script>
-  <script src="./dist/lib/tree.js"></script>
+  <script src="./lib/tree.js"></script>
 </html>
 `;
 
