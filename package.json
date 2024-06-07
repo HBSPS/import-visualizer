@@ -1,6 +1,6 @@
 {
   "name": "import-visualizer",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "./dist/bin/cli.js",
   "type": "module",
@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "author": "HBSPS",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.24.6",
     "@babel/preset-env": "^7.24.6",
