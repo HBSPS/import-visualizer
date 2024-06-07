@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { ParserOptions, parse } from '@babel/parser';
-import traverse from '@babel/traverse';
+import _traverse from '@babel/traverse';
+const traverse = _traverse.default;
 
 interface ImportDeclarationNode {
   source: {
