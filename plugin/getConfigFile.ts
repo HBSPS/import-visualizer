@@ -21,7 +21,7 @@ export function getConfigFile(): Config {
       return {
         compilerOptions: {
           baseUrl: '',
-          paths: { '': [] },
+          paths: {},
         },
       };
     }

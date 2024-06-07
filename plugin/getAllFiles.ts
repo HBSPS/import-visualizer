@@ -2,9 +2,9 @@ import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
 export function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
-  const files = readdirSync(dirPath);
+  const fileList = readdirSync(dirPath);
 
-  files.forEach((file) => {
+  fileList.forEach((file) => {
     const filePath = join(dirPath, file).replace(/\\/g, '/');
 
     if (statSync(filePath).isDirectory()) {

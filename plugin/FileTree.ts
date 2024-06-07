@@ -3,6 +3,7 @@ import { getAllFiles } from './getAllFiles';
 import { configPath } from './getConfigFile';
 import { getImportPaths } from './getImportPaths';
 import { resolveImportPaths } from './resolveImportPaths';
+import { splitFilePath } from './splitFilePath';
 
 interface FileNode {
   name: string;
@@ -13,12 +14,12 @@ interface FileNode {
 }
 
 export class FileTree {
-  root: string;
-  baseUrl: string;
-  paths: configPath;
-  allFiles: string[];
+  private root: string;
+  private baseUrl: string;
+  private paths: configPath;
+  private allFiles: string[];
 
-  tree: FileNode;
+  public tree: FileNode;
 
   constructor(root: string, targetDir: string, baseUrl: string, paths: configPath) {
     this.root = root;
@@ -30,13 +31,13 @@ export class FileTree {
     this.init();
   }
 
-  init() {
-    const [rootFilePath, rootFileName] = this.splitFilePath(this.root);
+  private init() {
+    const [rootFilePath, rootFileName] = splitFilePath(this.root);
     this.tree = this.createNode(rootFileName, rootFilePath);
     this.generateTree(this.tree);
   }
 
-  createNode(fileName: string, filePath: string): FileNode {
+  private createNode(fileName: string, filePath: string): FileNode {
     return {
       name: fileName,
       attributes: {
@@ -46,8 +47,9 @@ export class FileTree {
     };
   }
 
-  generateTree(node: FileNode) {
+  private generateTree(node: FileNode) {
     const filePath = `${node.attributes.dir}/${node.name}`;
+
     const imports = getImportPaths(filePath);
     const resolvedPath = resolveImportPaths(imports, this.baseUrl, this.paths);
     const resolvedPathWithExtensions = appendExtensions(resolvedPath, this.allFiles);
@@ -55,19 +57,11 @@ export class FileTree {
     resolvedPathWithExtensions.forEach((path) => {
       if (path === undefined) return;
 
-      const [newFilePath, newFileName] = this.splitFilePath(path);
+      const [newFilePath, newFileName] = splitFilePath(path);
       const newNode = this.createNode(newFileName, newFilePath);
 
       node.children.push(newNode);
       this.generateTree(newNode);
     });
-  }
-
-  splitFilePath(filePath: string) {
-    const splitPath = filePath.split('/');
-    const fileName = splitPath.pop() as string;
-    const path = splitPath.join('/');
-
-    return [path, fileName];
   }
 }

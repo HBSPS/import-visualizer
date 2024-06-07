@@ -1,21 +1,20 @@
 import { join } from 'path';
 import { configPath } from './getConfigFile';
 
-function pathMapping(aliasPath: string, baseUrl: string, paths: configPath) {
-  for (const [alias, targets] of Object.entries(paths)) {
-    const aliasPrefix = alias.replace('*', '');
+function pathMapping(aliasPathWithAlias: string, baseUrl: string, paths: configPath) {
+  for (const [aliasName, actualPath] of Object.entries(paths)) {
+    const aliasPrefix = aliasName.replace('*', '');
 
-    if (aliasPath.startsWith(aliasPrefix)) {
-      const targetPrefix = targets[0].replace('*', '');
-      const resolvedPath = aliasPath.replace(aliasPrefix, targetPrefix);
+    if (aliasPathWithAlias.startsWith(aliasPrefix)) {
+      const resolvedPath = aliasPathWithAlias.replace(aliasPrefix, actualPath[0].replace('*', ''));
 
       return join(baseUrl, resolvedPath).replace(/\\/g, '/');
     }
   }
 
-  return aliasPath;
+  return aliasPathWithAlias;
 }
 
 export function resolveImportPaths(imports: string[], baseUrl: string, paths: configPath) {
-  return imports.map((importPath) => pathMapping(importPath, baseUrl, paths));
+  return imports.map((importPathWithAlias) => pathMapping(importPathWithAlias, baseUrl, paths));
 }
