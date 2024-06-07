@@ -9,7 +9,7 @@ export default [
     input: './src/App.jsx',
     output: {
       format: 'iife',
-      file: './lib/tree.js',
+      file: './dist/lib/tree.js',
       name: 'tree',
       exports: 'named',
       globals: {
