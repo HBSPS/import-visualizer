@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 import open from 'open';
-import { resolve } from 'node:path';
-import fs from 'node:fs/promises';
+import { resolve } from 'path';
+import { unlink } from 'fs/promises';
 
-import { cliConfig } from '../src/cliConfig.js';
-import { getConfigFile } from '../src/getConfigFile.js';
-import { FileTree } from '../src/FileTree.js';
-import { generateTemplate } from '../src/generateTemplate.js';
+import { cliConfig } from '../plugin/cliConfig';
+import { getConfigFile } from '../plugin/getConfigFile';
+import { FileTree } from '../plugin/FileTree';
+import { generateTemplate } from '../plugin/generateTemplate';
 
 const { root, targetDir } = cliConfig(process.argv.slice(2));
 
@@ -22,4 +22,4 @@ await open(resultFilePath, { wait: true });
 
 console.log('Tree has been created. Check your browser.');
 
-await fs.unlink(resultFilePath);
+await unlink(resultFilePath);

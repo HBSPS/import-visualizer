@@ -1,7 +1,7 @@
-import fs from 'node:fs';
-import { resolve } from 'node:path';
+import { writeFileSync } from 'fs';
+import { resolve } from 'path';
 
-const template = (data) =>
+const template = (data: string) =>
   `<!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -17,6 +17,6 @@ const template = (data) =>
 </html>
 `;
 
-export function generateTemplate(data) {
-  fs.writeFileSync(resolve(process.argv[1], '../../index.html'), template(JSON.stringify(data)));
+export function generateTemplate(data: any) {
+  writeFileSync(resolve(process.argv[1], '../../index.html'), template(JSON.stringify(data)));
 }
