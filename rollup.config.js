@@ -1,38 +1,34 @@
-import babel from '@rollup/plugin-babel';
+import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
-import replace from '@rollup/plugin-replace';
+import { dts } from 'rollup-plugin-dts';
 
 export default [
   {
-    input: './src/App.jsx',
+    input: './bin/cli.ts',
     output: {
-      format: 'iife',
-      file: './dist/lib/tree.js',
-      name: 'tree',
+      format: 'esm',
+      file: `./dist/bin/cli.js`,
+      name: 'import-visualizer',
       exports: 'named',
-      globals: {
-        react: 'React',
-        'react-dom/client': 'ReactDOM',
-        'react-d3-tree': 'Tree',
-      },
     },
     plugins: [
-      babel({
-        babelHelpers: 'bundled',
-        presets: ['@babel/preset-env', '@babel/preset-react'],
-        exclude: 'node_modules/**',
+      typescript({
+        tsconfig: 'tsconfig.json',
       }),
+      json(),
       resolve(),
       commonjs({
         include: 'node_modules/**',
       }),
       terser(),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-        preventAssignment: true,
-      }),
     ],
+  },
+  {
+    input: './bin/cli.ts',
+    output: [{ file: './dist/bin/index.d.ts', format: 'esm' }],
+    plugins: [dts()],
   },
 ];

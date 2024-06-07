@@ -2,18 +2,18 @@ import { join } from 'path';
 import { configPath } from './getConfigFile';
 
 function pathMapping(aliasPathWithAlias: string, baseUrl: string, paths: configPath) {
-  let resolvedPath = aliasPathWithAlias;
-
   for (const [aliasName, actualPath] of Object.entries(paths)) {
     const aliasPrefix = aliasName.replace('*', '');
 
     if (aliasPathWithAlias.startsWith(aliasPrefix)) {
-      resolvedPath = aliasPathWithAlias.replace(aliasPrefix, actualPath[0].replace('*', ''));
-      break;
+      const targetPrefix = actualPath[0].replace('*', '');
+      const resolvedPath = aliasPathWithAlias.replace(aliasPrefix, targetPrefix);
+
+      return join(baseUrl, resolvedPath).replace(/\\/g, '/');
     }
   }
 
-  return join(baseUrl, resolvedPath).replace(/\\/g, '/');
+  return aliasPathWithAlias;
 }
 
 export function resolveImportPaths(imports: string[], baseUrl: string, paths: configPath) {

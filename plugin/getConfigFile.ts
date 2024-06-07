@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { parse } from 'json5';
+import JSON5 from 'json5';
 
 export type configPath = Record<string, string[]>;
 interface Config {
@@ -12,23 +12,23 @@ interface Config {
 export function getConfigFile(): Config {
   try {
     const tsconfig = readFileSync('tsconfig.json', 'utf-8');
-    const parsedConfig = parse(tsconfig);
+    const parsedConfig = JSON5.parse(tsconfig);
 
     return {
       compilerOptions: {
-        baseUrl: parsedConfig.baseUrl || '',
-        paths: parsedConfig.paths || {},
+        baseUrl: parsedConfig.compilerOptions.baseUrl || '',
+        paths: parsedConfig.compilerOptions.paths || {},
       },
     };
   } catch {
     try {
       const jsconfig = readFileSync('jsconfig.json', 'utf-8');
-      const parsedConfig = parse(jsconfig);
+      const parsedConfig = JSON5.parse(jsconfig);
 
       return {
         compilerOptions: {
-          baseUrl: parsedConfig.baseUrl || '',
-          paths: parsedConfig.paths || {},
+          baseUrl: parsedConfig.compilerOptions.baseUrl || '',
+          paths: parsedConfig.compilerOptions.paths || {},
         },
       };
     } catch {

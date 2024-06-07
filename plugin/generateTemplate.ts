@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
 const template = (data: string) => {
-  const script = readFileSync('../lib/tree.js');
+  const script = readFileSync(resolve(process.argv[1], '../../lib/tree.js'));
 
   return `<!DOCTYPE html>
 <html lang="ko">

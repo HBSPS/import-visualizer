@@ -52,6 +52,7 @@ export class FileTree {
 
     const imports = getImportPathsInFile(filePath);
     const resolvedPath = resolveImportPaths(imports, this.baseUrl, this.paths);
+    console.log(resolvedPath);
     const resolvedPathWithExtensions = appendExtensions(resolvedPath, this.allFiles);
 
     resolvedPathWithExtensions.forEach((path) => {

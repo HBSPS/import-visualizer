@@ -11,8 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "run-p build:*",
-    "build:plugin": "tsc",
-    "build:template": "rollup -c rollup.config.js",
+    "build:plugin": "rollup -c rollup.config.js",
+    "build:template": "rollup -c rollup.config-tree.js",
     "prebuild": "rm -rf ./dist"
   },
   "keywords": [],
@@ -24,9 +24,11 @@
     "@babel/preset-react": "^7.24.6",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.6",
     "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/babel-traverse": "^6.25.10",
     "@types/node": "^20.14.2",
     "npm-run-all": "^4.1.5",
@@ -34,7 +36,9 @@
     "react-d3-tree": "^3.6.2",
     "react-dom": "^18.3.1",
     "rollup": "^4.18.0",
+    "rollup-plugin-dts": "^6.1.1",
     "ts-node": "^10.9.2",
+    "tslib": "^2.6.3",
     "typescript": "^5.4.5"
   },
   "dependencies": {
