@@ -2,9 +2,12 @@
   "name": "import-visualizer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/bin/cli.js",
   "type": "module",
   "bin": "./dist/bin/cli.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "run-p build:*",
