@@ -12,11 +12,25 @@ interface Config {
 export function getConfigFile(): Config {
   try {
     const tsconfig = readFileSync('tsconfig.json', 'utf-8');
-    return parse(tsconfig);
+    const parsedConfig = parse(tsconfig);
+
+    return {
+      compilerOptions: {
+        baseUrl: parsedConfig.baseUrl || '',
+        paths: parsedConfig.paths || {},
+      },
+    };
   } catch {
     try {
       const jsconfig = readFileSync('jsconfig.json', 'utf-8');
-      return parse(jsconfig);
+      const parsedConfig = parse(jsconfig);
+
+      return {
+        compilerOptions: {
+          baseUrl: parsedConfig.baseUrl || '',
+          paths: parsedConfig.paths || {},
+        },
+      };
     } catch {
       return {
         compilerOptions: {
