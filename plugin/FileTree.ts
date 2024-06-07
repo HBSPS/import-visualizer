@@ -1,7 +1,7 @@
 import { appendExtensions } from './appendExtensions';
 import { getAllFiles } from './getAllFiles';
 import { configPath } from './getConfigFile';
-import { getImportPaths } from './getImportPaths';
+import { getImportPathsInFile } from './getImportPathsInFile';
 import { resolveImportPaths } from './resolveImportPaths';
 import { splitFilePath } from './splitFilePath';
 
@@ -50,7 +50,7 @@ export class FileTree {
   private generateTree(node: FileNode) {
     const filePath = `${node.attributes.dir}/${node.name}`;
 
-    const imports = getImportPaths(filePath);
+    const imports = getImportPathsInFile(filePath);
     const resolvedPath = resolveImportPaths(imports, this.baseUrl, this.paths);
     const resolvedPathWithExtensions = appendExtensions(resolvedPath, this.allFiles);
 

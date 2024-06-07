@@ -8,7 +8,7 @@ interface ImportDeclarationNode {
   };
 }
 
-export function getImportPaths(filePath: string) {
+export function getImportPathsInFile(filePath: string) {
   const fileContent = readFileSync(filePath, 'utf8');
 
   const babelOptions = {
