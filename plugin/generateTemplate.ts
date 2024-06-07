@@ -1,8 +1,10 @@
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
-const template = (data: string) =>
-  `<!DOCTYPE html>
+const template = (data: string) => {
+  const script = readFileSync('../lib/tree.js');
+
+  return `<!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -13,9 +15,10 @@ const template = (data: string) =>
     <div id="root"></div>
   </body>
   <script>const data = ${data}</script>
-  <script src="./lib/tree.js"></script>
+  <script>${script}</script>
 </html>
 `;
+};
 
 export function generateTemplate(data: any) {
   writeFileSync(resolve(process.argv[1], '../../index.html'), template(JSON.stringify(data)));
