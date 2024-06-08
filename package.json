@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "jest -c jest.config.js",
+    "test": "jest -c jest.config.js --coverage",
     "build": "run-p build:*",
     "build:plugin": "rollup -c rollup.config.js",
     "build:template": "rollup -c rollup.config-tree.js",
@@ -29,6 +29,7 @@
     "@rollup/plugin-replace": "^5.0.6",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@types/babel__traverse": "^7.20.6",
     "@types/babel-traverse": "^6.25.10",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.2",
