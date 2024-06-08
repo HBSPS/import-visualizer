@@ -10,6 +10,6 @@
     "strictNullChecks": true,
     "moduleResolution": "node",
     "declaration": true,
-    "types": ["node", "babel-traverse", "jest", "babel__traverse"]
+    "types": ["node", "jest", "babel__traverse"]
   }
 }
