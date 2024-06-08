@@ -34,6 +34,7 @@ export class FileTree {
   private init() {
     const [rootFilePath, rootFileName] = splitFilePath(this.root);
     this.tree = this.createNode(rootFileName, rootFilePath);
+    if (!this.baseUrl) this.baseUrl = rootFilePath;
     this.generateTree(this.tree);
   }
 
