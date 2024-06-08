@@ -48,8 +48,9 @@ export class FileTree {
   }
 
   private generateTree(node: FileNode) {
-    const filePath = `${node.attributes.dir}/${node.name}`;
+    if (node.name.split('.').pop() === 'css') return;
 
+    const filePath = `${node.attributes.dir}/${node.name}`;
     const imports = getImportPathsInFile(filePath);
     const resolvedPath = resolveImportPaths(imports, this.baseUrl, this.paths);
     const resolvedPathWithExtensions = appendExtensions(resolvedPath, this.allFiles);
