@@ -15,6 +15,7 @@ interface FileNode {
 
 export class FileTree {
   private root: string;
+  private targetDir: string;
   private baseUrl: string;
   private paths: configPath;
   private allFiles: string[];
@@ -23,6 +24,7 @@ export class FileTree {
 
   constructor(root: string, targetDir: string, baseUrl: string, paths: configPath) {
     this.root = root;
+    this.targetDir = targetDir;
     this.baseUrl = baseUrl;
     this.paths = paths;
     this.allFiles = getAllFiles(targetDir);
@@ -34,7 +36,7 @@ export class FileTree {
   private init() {
     const [rootFilePath, rootFileName] = splitFilePath(this.root);
     this.tree = this.createNode(rootFileName, rootFilePath);
-    if (!this.baseUrl) this.baseUrl = rootFilePath;
+    if (!this.baseUrl) this.baseUrl = this.targetDir;
     this.generateTree(this.tree);
   }
 
