@@ -13,7 +13,7 @@ function pathMapping(aliasPathWithAlias: string, baseUrl: string, paths: configP
     }
   }
 
-  return aliasPathWithAlias;
+  return join(baseUrl, aliasPathWithAlias).replace(/\\/g, '/');
 }
 
 export function resolveImportPaths(imports: string[], baseUrl: string, paths: configPath) {
