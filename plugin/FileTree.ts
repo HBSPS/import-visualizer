@@ -51,6 +51,8 @@ export class FileTree {
     // @babel/parser can't parse css file.
     if (node.name.split('.').pop() === 'css') return;
 
+    // If the node has dir attributes, filePath will be relativePath.
+    // If the node does not dir attributes, filePath will be alsolutePath. (e.g. If the file is in the project root.)
     const filePath = `${node.attributes.dir || this.projectDir}/${node.name}`;
 
     const currentFileAbsolutePath = getAbsolutePath(filePath);
@@ -63,7 +65,7 @@ export class FileTree {
     const importedFileAbsolutePaths = appendExtensions(resolvedAbsolutePath, this.allFiles);
 
     importedFileAbsolutePaths.forEach((importedFileAbsolutePath) => {
-      if (importedFileAbsolutePath === undefined) return; // import npm libraries etc.
+      if (importedFileAbsolutePath === undefined) return; // e.g. import npm libraries.
 
       const [newFileAbsolutePath, newFileName] = splitFilePath(importedFileAbsolutePath);
       const newFileRelativePath = convertToRelativePath(this.projectDir, newFileAbsolutePath);
