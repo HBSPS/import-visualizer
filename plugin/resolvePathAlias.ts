@@ -1,4 +1,4 @@
-import { isAbsolute, join } from 'path';
+import { join } from 'path';
 
 import type { absolutePath, aliasPath, configPath, relativePath } from './types';
 
@@ -12,8 +12,6 @@ function pathMapping(
   if (aliasPathWithAlias.startsWith('./')) return join(currentFileAbsoluteDir, aliasPathWithAlias).replace(/\\/g, '/');
   // e.g. ../test/TestFile
   if (aliasPathWithAlias.startsWith('../')) return join(currentFileAbsoluteDir, aliasPathWithAlias).replace(/\\/g, '/');
-  // e.g. join('C:/.../<project>/src', '../TestFile') => C:/.../<project>/TestFile
-  if (!baseUrl) return join(currentFileAbsoluteDir, aliasPathWithAlias).replace(/\\/g, '/');
 
   /*
    * baseUrl: "src"
