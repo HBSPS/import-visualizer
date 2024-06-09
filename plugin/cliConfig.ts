@@ -1,9 +1,4 @@
-interface CliOptions {
-  root: string;
-  targetDir: string;
-}
-
-type cliArgType = '--root' | '--targetDir';
+import type { CliOptions, cliArgType } from './types';
 
 export function cliConfig(argv: NodeJS.Process['argv']): CliOptions {
   const options = {

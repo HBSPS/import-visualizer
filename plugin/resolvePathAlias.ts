@@ -1,7 +1,13 @@
 import { join } from 'path';
-import { configPath } from './getConfigFile';
 
-function pathMapping(aliasPathWithAlias: string, currentFileAbsoluteDir: string, baseUrl: string, paths: configPath) {
+import type { absolutePath, aliasPath, configPath, relativePath } from './types';
+
+function pathMapping(
+  aliasPathWithAlias: aliasPath,
+  currentFileAbsoluteDir: absolutePath,
+  baseUrl: relativePath,
+  paths: configPath
+): absolutePath {
   if (!baseUrl) return join(currentFileAbsoluteDir, aliasPathWithAlias).replace(/\\/g, '/');
 
   for (const [aliasName, actualPath] of Object.entries(paths)) {
@@ -18,6 +24,11 @@ function pathMapping(aliasPathWithAlias: string, currentFileAbsoluteDir: string,
   return join(currentFileAbsoluteDir, baseUrl, aliasPathWithAlias).replace(/\\/g, '/');
 }
 
-export function resolvePathAlias(imports: string[], currentFileAbsoluteDir: string, baseUrl: string, paths: configPath) {
+export function resolvePathAlias(
+  imports: aliasPath[],
+  currentFileAbsoluteDir: absolutePath,
+  baseUrl: relativePath,
+  paths: configPath
+): absolutePath[] {
   return imports.map((importPathWithAlias) => pathMapping(importPathWithAlias, currentFileAbsoluteDir, baseUrl, paths));
 }

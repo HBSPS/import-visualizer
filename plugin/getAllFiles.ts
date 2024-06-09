@@ -2,7 +2,9 @@ import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { getAbsolutePath } from './getAbsolutePath';
 
-export function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
+import type { absolutePath, relativePath } from './types';
+
+export function getAllFiles(dirPath: relativePath, arrayOfFiles: absolutePath[] = []): absolutePath[] {
   const fileList = readdirSync(dirPath);
 
   fileList.forEach((file) => {

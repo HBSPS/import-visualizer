@@ -2,33 +2,26 @@ import { dirname } from 'path';
 import { appendExtensions } from './appendExtensions';
 import { getAbsolutePath } from './getAbsolutePath';
 import { getAllFiles } from './getAllFiles';
-import { configPath } from './getConfigFile';
 import { getImportPathsInFile } from './getImportPathsInFile';
 import { resolvePathAlias } from './resolvePathAlias';
 import { splitFilePath } from './splitFilePath';
 import { convertToRelativePath } from './convertToRelativePath';
 
-interface FileNode {
-  name: string;
-  attributes: {
-    dir: string;
-  };
-  children: FileNode[];
-}
+import type { FileNode, absolutePath, configPath, relativePath } from './types';
 
 export class FileTree {
-  private root: string;
-  private targetDir: string;
-  private baseUrl: string;
+  private root: relativePath;
+  private baseUrl: relativePath;
+
   private paths: configPath;
-  private allFiles: string[];
-  private projectDir: string;
+
+  private allFiles: absolutePath[];
+  private projectDir: absolutePath;
 
   public tree: FileNode;
 
-  constructor(root: string, targetDir: string, baseUrl: string, paths: configPath) {
+  constructor(root: relativePath, targetDir: relativePath, baseUrl: relativePath, paths: configPath) {
     this.root = root;
-    this.targetDir = targetDir;
     this.baseUrl = baseUrl;
     this.paths = paths;
     this.allFiles = getAllFiles(targetDir);
@@ -44,7 +37,7 @@ export class FileTree {
     this.generateTree(this.tree);
   }
 
-  private createNode(fileName: string, filePath: string): FileNode {
+  private createNode(fileName: string, filePath: relativePath): FileNode {
     return {
       name: fileName,
       attributes: {
@@ -55,23 +48,29 @@ export class FileTree {
   }
 
   private generateTree(node: FileNode) {
+    // @babel/parser can't parse css file.
     if (node.name.split('.').pop() === 'css') return;
 
-    const filePath = `${node.attributes.dir || this.projectDir}/${node.name}`;
+    // if the node has dir attribute, filePath will be relativePath.
+    // if the node dose not have dir attributes, filePath will be absolutePath.
+    const filePath = `${node.attributes.dir}/${node.name}`;
+
     const currentFileAbsolutePath = getAbsolutePath(filePath);
     const currentFileAbsoluteDir = dirname(currentFileAbsolutePath);
 
-    const imports = getImportPathsInFile(currentFileAbsolutePath);
+    // relativePaths or paths with alias
+    const importsWithAlias = getImportPathsInFile(currentFileAbsolutePath);
 
-    const resolvedPath = resolvePathAlias(imports, currentFileAbsoluteDir, this.baseUrl, this.paths);
-    const resolvedPathWithExtensions = appendExtensions(resolvedPath, this.allFiles);
+    const resolvedAbsolutePath = resolvePathAlias(importsWithAlias, currentFileAbsoluteDir, this.baseUrl, this.paths);
+    const importedFileAbsolutePaths = appendExtensions(resolvedAbsolutePath, this.allFiles);
 
-    resolvedPathWithExtensions.forEach((path) => {
-      if (path === undefined) return;
+    importedFileAbsolutePaths.forEach((importedFileAbsolutePath) => {
+      if (importedFileAbsolutePath === undefined) return; // import npm libraries etc.
 
-      const [newFilePath, newFileName] = splitFilePath(path);
-      const newNode = this.createNode(newFileName, convertToRelativePath(this.projectDir, newFilePath));
+      const [newFileAbsolutePath, newFileName] = splitFilePath(importedFileAbsolutePath);
+      const newFileRelativePath = convertToRelativePath(this.projectDir, newFileAbsolutePath);
 
+      const newNode = this.createNode(newFileName, newFileRelativePath);
       node.children.push(newNode);
       this.generateTree(newNode);
     });

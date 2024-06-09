@@ -1,6 +1,9 @@
 import { readFileSync } from 'fs';
 import { ParserOptions, parse } from '@babel/parser';
 import _traverse from '@babel/traverse';
+
+import type { relativePath } from './types';
+
 // @ts-ignore
 const traverse = _traverse.default;
 
@@ -10,7 +13,7 @@ interface ImportDeclarationNode {
   };
 }
 
-export function getImportPathsInFile(filePath: string) {
+export function getImportPathsInFile(filePath: string): relativePath[] {
   const fileContent = readFileSync(filePath, 'utf8');
 
   const babelOptions = {

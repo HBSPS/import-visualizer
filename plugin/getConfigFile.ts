@@ -1,13 +1,7 @@
 import { readFileSync } from 'fs';
 import JSON5 from 'json5';
 
-export type configPath = Record<string, string[]>;
-interface Config {
-  compilerOptions: {
-    baseUrl: string;
-    paths: configPath;
-  };
-}
+import type { Config } from './types';
 
 export function getConfigFile(): Config {
   try {
