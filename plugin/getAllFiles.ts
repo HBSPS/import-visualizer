@@ -1,16 +1,18 @@
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
+import { getAbsolutePath } from './getAbsolutePath';
 
 export function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
   const fileList = readdirSync(dirPath);
 
   fileList.forEach((file) => {
-    const filePath = join(dirPath, file).replace(/\\/g, '/');
+    const relativeFilePath = join(dirPath, file);
+    const absoluteFilePath = getAbsolutePath(relativeFilePath);
 
-    if (statSync(filePath).isDirectory() && filePath != 'node_modules') {
-      arrayOfFiles = getAllFiles(filePath, arrayOfFiles);
+    if (statSync(relativeFilePath).isDirectory() && relativeFilePath != 'node_modules') {
+      arrayOfFiles = getAllFiles(relativeFilePath, arrayOfFiles);
     } else {
-      arrayOfFiles.push(filePath);
+      arrayOfFiles.push(absoluteFilePath);
     }
   });
 

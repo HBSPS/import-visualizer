@@ -1,9 +1,12 @@
+import { dirname } from 'path';
 import { appendExtensions } from './appendExtensions';
+import { getAbsolutePath } from './getAbsolutePath';
 import { getAllFiles } from './getAllFiles';
 import { configPath } from './getConfigFile';
 import { getImportPathsInFile } from './getImportPathsInFile';
-import { resolveImportPaths } from './resolveImportPaths';
+import { resolvePathAlias } from './resolvePathAlias';
 import { splitFilePath } from './splitFilePath';
+import { convertToRelativePath } from './convertToRelativePath';
 
 interface FileNode {
   name: string;
@@ -19,6 +22,7 @@ export class FileTree {
   private baseUrl: string;
   private paths: configPath;
   private allFiles: string[];
+  private projectDir: string;
 
   public tree: FileNode;
 
@@ -28,6 +32,7 @@ export class FileTree {
     this.baseUrl = baseUrl;
     this.paths = paths;
     this.allFiles = getAllFiles(targetDir);
+    this.projectDir = process.cwd().replace(/\\/g, '/');
 
     this.tree = { name: '', attributes: { dir: '' }, children: [] };
     this.init();
@@ -36,7 +41,6 @@ export class FileTree {
   private init() {
     const [rootFilePath, rootFileName] = splitFilePath(this.root);
     this.tree = this.createNode(rootFileName, rootFilePath);
-    if (!this.baseUrl) this.baseUrl = this.targetDir;
     this.generateTree(this.tree);
   }
 
@@ -53,16 +57,20 @@ export class FileTree {
   private generateTree(node: FileNode) {
     if (node.name.split('.').pop() === 'css') return;
 
-    const filePath = `${node.attributes.dir}/${node.name}`;
-    const imports = getImportPathsInFile(filePath);
-    const resolvedPath = resolveImportPaths(imports, this.baseUrl, this.paths);
+    const filePath = `${node.attributes.dir || this.projectDir}/${node.name}`;
+    const currentFileAbsolutePath = getAbsolutePath(filePath);
+    const currentFileAbsoluteDir = dirname(currentFileAbsolutePath);
+
+    const imports = getImportPathsInFile(currentFileAbsolutePath);
+
+    const resolvedPath = resolvePathAlias(imports, currentFileAbsoluteDir, this.baseUrl, this.paths);
     const resolvedPathWithExtensions = appendExtensions(resolvedPath, this.allFiles);
 
     resolvedPathWithExtensions.forEach((path) => {
       if (path === undefined) return;
 
       const [newFilePath, newFileName] = splitFilePath(path);
-      const newNode = this.createNode(newFileName, newFilePath);
+      const newNode = this.createNode(newFileName, convertToRelativePath(this.projectDir, newFilePath));
 
       node.children.push(newNode);
       this.generateTree(newNode);
