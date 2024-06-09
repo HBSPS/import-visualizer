@@ -28,7 +28,7 @@ describe('getConfigFile', () => {
     });
   });
 
-  test('config without any alias', () => {
+  test('config without alias', () => {
     jest.spyOn(fs, 'readFileSync').mockImplementationOnce(() => '{ compilerOptions: {} }');
 
     expect(getConfigFile()).toStrictEqual({
@@ -93,7 +93,7 @@ describe('getConfigFile (JS)', () => {
     });
   });
 
-  test('config without any alias', () => {
+  test('config without alias', () => {
     jest
       .spyOn(fs, 'readFileSync')
       .mockImplementationOnce(() => {
