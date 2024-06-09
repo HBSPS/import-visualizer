@@ -51,8 +51,6 @@ export class FileTree {
     // @babel/parser can't parse css file.
     if (node.name.split('.').pop() === 'css') return;
 
-    // if the node has dir attribute, filePath will be relativePath.
-    // if the node dose not have dir attributes, filePath will be absolutePath.
     const filePath = `${node.attributes.dir}/${node.name}`;
 
     const currentFileAbsolutePath = getAbsolutePath(filePath);
