@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { isAbsolute, join } from 'path';
 
 import type { absolutePath, aliasPath, configPath, relativePath } from './types';
 
@@ -8,20 +8,34 @@ function pathMapping(
   baseUrl: relativePath,
   paths: configPath
 ): absolutePath {
+  // e.g. ./test/TestFile
+  if (aliasPathWithAlias.startsWith('./')) return join(currentFileAbsoluteDir, aliasPathWithAlias).replace(/\\/g, '/');
+  // e.g. join('C:/.../<project>/src', '../TestFile') => C:/.../<project>/TestFile
   if (!baseUrl) return join(currentFileAbsoluteDir, aliasPathWithAlias).replace(/\\/g, '/');
 
+  /*
+   * baseUrl: "src"
+   * paths: { "@/*": ["*"] }
+   * aliasPathWithAlias = @/TestFile
+   */
   for (const [aliasName, actualPath] of Object.entries(paths)) {
-    const aliasPrefix = aliasName.replace('*', '');
+    const aliasPrefix = aliasName.replace('*', ''); // e.g. "@/"
 
     if (aliasPathWithAlias.startsWith(aliasPrefix)) {
-      const targetPrefix = actualPath[0].replace('*', '');
-      const resolvedPath = aliasPathWithAlias.replace(aliasPrefix, targetPrefix);
+      const targetPrefix = actualPath[0].replace('*', ''); // e.g. ""
+      const resolvedPath = aliasPathWithAlias.replace(aliasPrefix, targetPrefix); // e.g. TestFile
 
-      return join(currentFileAbsoluteDir, baseUrl, resolvedPath).replace(/\\/g, '/');
+      // e.g. join('C:/.../<project>', 'src', "TestFile") => C:/.../<project>/src/TestFile
+      return join(process.cwd(), baseUrl, resolvedPath).replace(/\\/g, '/');
     }
   }
 
-  return join(currentFileAbsoluteDir, baseUrl, aliasPathWithAlias).replace(/\\/g, '/');
+  /*
+   * baseUrl: "src"
+   * aliasPathWithAlias = TestFile
+   * join('C:/.../<project>', 'src', "TestFile") => C:/.../<project>/src/TestFile
+   */
+  return join(process.cwd(), baseUrl, aliasPathWithAlias).replace(/\\/g, '/');
 }
 
 export function resolvePathAlias(

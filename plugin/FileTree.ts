@@ -51,7 +51,7 @@ export class FileTree {
     // @babel/parser can't parse css file.
     if (node.name.split('.').pop() === 'css') return;
 
-    const filePath = `${node.attributes.dir}/${node.name}`;
+    const filePath = `${node.attributes.dir || this.projectDir}/${node.name}`;
 
     const currentFileAbsolutePath = getAbsolutePath(filePath);
     const currentFileAbsoluteDir = dirname(currentFileAbsolutePath);
