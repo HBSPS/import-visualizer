@@ -16,9 +16,7 @@ Add the script to package.json.
 
 ```json
 "scripts": {
-  ...
   "import-visualizer": "import-visualizer --root src/index.ts --targetDir src",
-  ...
 }
 ```
 
