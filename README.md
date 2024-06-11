@@ -30,6 +30,12 @@ You can run visualizer as follows.
 npm run import-visualizer
 ```
 
+To use the library without installation, enter the command as follows.
+
+```
+npx import-visualizer --root <rootFilePath> --targetDir <dir>
+```
+
 ## Options
 
 `--root <filePath>` (default `src/App.tsx`) - Path to the file that will be the root of the tree.
