@@ -1,6 +1,6 @@
 {
   "name": "import-visualizer",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "./dist/bin/cli.js",
   "type": "module",
   "bin": "./dist/bin/cli.js",
