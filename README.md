@@ -6,6 +6,10 @@ It can be used even if the baseUrl and paths options are set in jsconfig.json or
 
 Because the goal is to represent the hierarchy for imports from the project root file, duplicate files are intended.
 
+## Example
+
+![Example](https://raw.githubusercontent.com/HBSPS/import-visualizer/main/screenshots/exmaple2.png)
+
 ## Installation
 
 ```sh
