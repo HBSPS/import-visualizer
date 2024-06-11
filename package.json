@@ -1,7 +1,6 @@
 {
   "name": "import-visualizer",
   "version": "0.0.1",
-  "description": "",
   "main": "./dist/bin/cli.js",
   "type": "module",
   "bin": "./dist/bin/cli.js",
@@ -15,9 +14,6 @@
     "build:template": "rollup -c rollup.config-tree.js",
     "prebuild": "rm -rf ./dist"
   },
-  "keywords": [],
-  "author": "HBSPS",
-  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.24.6",
     "@babel/preset-env": "^7.24.6",
@@ -48,5 +44,17 @@
     "@babel/traverse": "^7.24.6",
     "json5": "^2.2.3",
     "open": "^10.1.0"
-  }
+  },
+  "author": "HBSPS (https://github.com/HBSPS)",
+  "license": "MIT",
+  "description": "import-visualizer",
+  "homepage": "https://github.com/HBSPS/import-visualizer",
+  "repository": "HBSPS/import-visualizer",
+  "keywords": [
+    "visualizer",
+    "esm",
+    "treemap",
+    "diagram",
+    "hierarchy"
+  ]
 }
