@@ -1,3 +1,6 @@
+![NPM Version](https://img.shields.io/npm/v/import-visualizer?style=flat&color=blue)
+![NPM Downloads](https://img.shields.io/npm/dm/import-visualizer?style=flat&color=brightgreen)
+
 # import-visualizer
 
 You can visualize the import information of js, ts, and react projects in a tree structure.
