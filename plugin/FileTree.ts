@@ -47,32 +47,38 @@ export class FileTree {
     };
   }
 
-  private generateTree(node: FileNode) {
-    // @babel/parser can't parse css file.
-    if (node.name.split('.').pop() === 'css') return;
+  private generateTree(rootNode: FileNode): void {
+    const queue: FileNode[] = [rootNode];
 
-    // If the node has dir attributes, filePath will be relativePath.
-    // If the node does not dir attributes, filePath will be alsolutePath. (e.g. If the file is in the project root.)
-    const filePath = `${node.attributes.dir || this.projectDir}/${node.name}`;
+    while (queue.length > 0) {
+      const node = queue.shift()!;
 
-    const currentFileAbsolutePath = getAbsolutePath(filePath);
-    const currentFileAbsoluteDir = dirname(currentFileAbsolutePath);
+      // @babel/parser can't parse css file.
+      if (node.name.split('.').pop() === 'css') continue;
 
-    // relativePaths or paths with alias
-    const importsWithAlias = getImportPathsInFile(currentFileAbsolutePath);
+      // If the node has dir attributes, filePath will be relativePath.
+      // If the node does not dir attributes, filePath will be alsolutePath. (e.g. If the file is in the project root.)
+      const filePath = `${node.attributes.dir || this.projectDir}/${node.name}`;
 
-    const resolvedAbsolutePath = resolvePathAlias(importsWithAlias, currentFileAbsoluteDir, this.baseUrl, this.paths);
-    const importedFileAbsolutePaths = appendExtensions(resolvedAbsolutePath, this.allFiles);
+      const currentFileAbsolutePath = getAbsolutePath(filePath);
+      const currentFileAbsoluteDir = dirname(currentFileAbsolutePath);
 
-    importedFileAbsolutePaths.forEach((importedFileAbsolutePath) => {
-      if (importedFileAbsolutePath === undefined) return; // e.g. import npm libraries.
+      // relativePaths or paths with alias
+      const importsWithAlias = getImportPathsInFile(currentFileAbsolutePath);
 
-      const [newFileAbsolutePath, newFileName] = splitFilePath(importedFileAbsolutePath);
-      const newFileRelativePath = convertToRelativePath(this.projectDir, newFileAbsolutePath);
+      const resolvedAbsolutePath = resolvePathAlias(importsWithAlias, currentFileAbsoluteDir, this.baseUrl, this.paths);
+      const importedFileAbsolutePaths = appendExtensions(resolvedAbsolutePath, this.allFiles);
 
-      const newNode = this.createNode(newFileName, newFileRelativePath);
-      node.children.push(newNode);
-      this.generateTree(newNode);
-    });
+      for (const importedFileAbsolutePath of importedFileAbsolutePaths) {
+        if (importedFileAbsolutePath === undefined) continue; // e.g. import npm libraries.
+
+        const [newFileAbsolutePath, newFileName] = splitFilePath(importedFileAbsolutePath);
+        const newFileRelativePath = convertToRelativePath(this.projectDir, newFileAbsolutePath);
+
+        const newNode = this.createNode(newFileName, newFileRelativePath);
+        node.children.push(newNode);
+        queue.push(newNode);
+      }
+    }
   }
 }

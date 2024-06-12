@@ -1,5 +1,5 @@
 import { readdirSync, statSync } from 'fs';
-import { join } from 'path';
+import path, { basename, join } from 'path';
 import { getAbsolutePath } from './getAbsolutePath';
 
 import type { absolutePath, relativePath } from './types';
@@ -14,6 +14,9 @@ export function getAllFiles(dirPath: relativePath, arrayOfFiles: absolutePath[] 
     if (statSync(relativeFilePath).isDirectory() && relativeFilePath != 'node_modules') {
       arrayOfFiles = getAllFiles(relativeFilePath, arrayOfFiles);
     } else {
+      if (basename(absoluteFilePath).split('.').includes('test')) return;
+      if (basename(absoluteFilePath).split('.').includes('spec')) return;
+
       arrayOfFiles.push(absoluteFilePath);
     }
   });
