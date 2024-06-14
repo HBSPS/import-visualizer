@@ -1,5 +1,5 @@
 import { readdirSync, statSync } from 'fs';
-import path, { basename, join } from 'path';
+import { basename, join } from 'path';
 import { getAbsolutePath } from './getAbsolutePath';
 
 import type { absolutePath, relativePath } from './types';
