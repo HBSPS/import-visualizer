@@ -1,8 +1,11 @@
 import { readFileSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
+
+export const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const template = (data: string) => {
-  const script = readFileSync(resolve(process.argv[1], '../../lib/tree.js'));
+  const script = readFileSync(resolve(__dirname, '../lib/tree.js'));
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -21,5 +24,5 @@ const template = (data: string) => {
 };
 
 export function generateTemplate(data: any) {
-  writeFileSync(resolve(process.argv[1], '../../index.html'), template(JSON.stringify(data)));
+  writeFileSync(resolve(__dirname, '../index.html'), template(JSON.stringify(data)));
 }
