@@ -1,6 +1,6 @@
 {
   "name": "import-visualizer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./dist/bin/cli.js",
   "type": "module",
   "bin": "./dist/bin/cli.js",
@@ -43,7 +43,7 @@
     "@babel/parser": "^7.24.6",
     "@babel/traverse": "^7.24.6",
     "json5": "^2.2.3",
-    "open": "^10.1.0"
+    "open": "^8.4.2"
   },
   "author": "HBSPS (https://github.com/HBSPS)",
   "license": "MIT",
