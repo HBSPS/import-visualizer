@@ -6,25 +6,23 @@ export default function Controller() {
 
   return (
     <>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
-          <span>Title Size</span>
-          <button type='button' onClick={() => setTitleSize((prev) => prev + 1)}>
-            up
-          </button>
-          <button type='button' onClick={() => setTitleSize((prev) => (prev - 1 > 0 ? prev - 1 : prev))}>
-            down
-          </button>
-        </div>
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
-          <span>Attribute Size</span>
-          <button type='button' onClick={() => setAttributeSize((prev) => prev + 1)}>
-            up
-          </button>
-          <button type='button' onClick={() => setAttributeSize((prev) => (prev - 1 > 0 ? prev - 1 : prev))}>
-            down
-          </button>
-        </div>
+      <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
+        <span>Title Size</span>
+        <button type='button' onClick={() => setTitleSize((prev) => prev + 1)}>
+          up
+        </button>
+        <button type='button' onClick={() => setTitleSize((prev) => (prev - 1 > 0 ? prev - 1 : prev))}>
+          down
+        </button>
+      </div>
+      <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
+        <span>Attribute Size</span>
+        <button type='button' onClick={() => setAttributeSize((prev) => prev + 1)}>
+          up
+        </button>
+        <button type='button' onClick={() => setAttributeSize((prev) => (prev - 1 > 0 ? prev - 1 : prev))}>
+          down
+        </button>
       </div>
       <style jsx>
         {`
