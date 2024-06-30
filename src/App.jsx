@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Tree from 'react-d3-tree';
+import Controller from './Controller.jsx';
 
 function App() {
   return (
     <div style={{ width: '98vw', height: '98vh' }}>
+      <Controller />
       <Tree
         data={data}
         pathFunc='step'
@@ -14,7 +16,7 @@ function App() {
         rootNodeClassName='node__root'
         branchNodeClassName='node__branch'
         leafNodeClassName='node__leaf'
-        initialDepth='1'
+        initialDepth={undefined}
       />
     </div>
   );
