@@ -55,8 +55,7 @@ function App() {
         rootNodeClassName='node__root'
         branchNodeClassName='node__branch'
         leafNodeClassName='node__leaf'
-        /* TODO: 초기 collapse 옵션 설정 기능 추가 */
-        initialDepth={undefined}
+        initialDepth={collapse ? 1 : undefined}
         depthFactor={depthFactor}
       />
     </div>
