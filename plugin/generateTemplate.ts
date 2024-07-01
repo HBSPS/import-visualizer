@@ -2,9 +2,11 @@ import { readFileSync, writeFileSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
-export const __dirname = dirname(fileURLToPath(import.meta.url))
+import type { FileNode } from './types';
 
-const template = (data: string) => {
+export const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const template = (data: string, collapse: boolean) => {
   const script = readFileSync(resolve(__dirname, '../lib/tree.js'));
 
   return `<!DOCTYPE html>
@@ -18,11 +20,12 @@ const template = (data: string) => {
     <div id="root"></div>
   </body>
   <script>const data = ${data}</script>
+  <script>const collapse = ${collapse}</script>
   <script>${script}</script>
 </html>
 `;
 };
 
-export function generateTemplate(data: any) {
-  writeFileSync(resolve(__dirname, '../index.html'), template(JSON.stringify(data)));
+export function generateTemplate(data: FileNode, collapse: boolean) {
+  writeFileSync(resolve(__dirname, '../index.html'), template(JSON.stringify(data), collapse));
 }

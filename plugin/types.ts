@@ -10,10 +10,11 @@ interface FileNode {
   children: FileNode[];
 }
 
-type cliArgType = '--root' | '--targetDir';
+type cliArgType = '--root' | '--targetDir' | '--collapse';
 interface CliOptions {
   root: string;
   targetDir: string;
+  collapse: boolean;
 }
 
 type configPath = Record<string, string[]>;

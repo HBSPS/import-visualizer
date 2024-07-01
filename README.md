@@ -35,8 +35,8 @@ npm run import-visualizer
 
 To use the library without installation, enter the command as follows.
 
-```
-npx import-visualizer --root <rootFilePath> --targetDir <dir>
+```sh
+npx import-visualizer --root <rootFilePath> --targetDir <dir> --collapse
 ```
 
 ## Options
@@ -45,9 +45,11 @@ npx import-visualizer --root <rootFilePath> --targetDir <dir>
 
 `--targetDir <dir>` (default `src`) - Directory path to be included in the tree. If you want to include the entire project file, set it to `.`
 
+`--collapse` - Collapse the tree and render it
+
 ## Generation Mechanism
 
-```
+```sh
         +---------------------------+
         |                           |
 +------->       generateTree        | { name: 'App.tsx', attributes: { dir: 'src' }, children: [] }
