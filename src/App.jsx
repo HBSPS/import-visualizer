@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Tree from 'react-d3-tree';
 import TextSizeController from './TextSizeController.jsx';
@@ -33,6 +33,16 @@ function App() {
   const decreaseSeperation = () => {
     setSeperation((prev) => (prev - SEPERATION_INTERVAL > 0 ? prev - SEPERATION_INTERVAL : prev));
   };
+
+  useEffect(() => {
+    if (orientation === 'horizontal') {
+      setDepthFactor(500);
+      setSeperation(0.5);
+    } else {
+      setDepthFactor(100);
+      setSeperation(2);
+    }
+  }, [orientation]);
 
   return (
     <div style={{ width: '98vw', height: '95vh' }}>
