@@ -9,7 +9,7 @@ export default [
       dir: 'dist',
       preserveModules: true,
     },
-    external: ['open', 'json5', '@babel/parser', '@babel/traverse', 'fs', 'path', 'fs/promises'],
+    external: ['open', 'json5', '@babel/parser', '@babel/traverse', 'fs', 'path', 'fs/promises', 'url'],
     plugins: [
       typescript({
         tsconfig: 'tsconfig.json',
