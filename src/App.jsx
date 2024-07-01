@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Tree from 'react-d3-tree';
+import TextSizeController from './TextSizeController.jsx';
 import Controller from './Controller.jsx';
 
 const SEPERATION_INTERVAL = 0.5;
@@ -41,25 +42,9 @@ function App() {
             {orientation}
           </button>
         </div>
-        <Controller />
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
-          <span>Depth Factor</span>
-          <button type='button' onClick={increaseDepthFactor}>
-            up
-          </button>
-          <button type='button' onClick={decreaseDepthFactor}>
-            down
-          </button>
-        </div>
-        <div style={{ display: 'flex', gap: 5, alignItems: 'center', justifyContent: 'center' }}>
-          <span>Seperation</span>
-          <button type='button' onClick={increaseSeperation}>
-            up
-          </button>
-          <button type='button' onClick={decreaseSeperation}>
-            down
-          </button>
-        </div>
+        <TextSizeController />
+        <Controller title='Depth Factor' onClickIncrease={increaseDepthFactor} onClickDecrease={decreaseDepthFactor} />
+        <Controller title='Seperation' onClickIncrease={increaseSeperation} onClickDecrease={decreaseSeperation} />
       </div>
       <Tree
         data={data}
@@ -70,6 +55,7 @@ function App() {
         rootNodeClassName='node__root'
         branchNodeClassName='node__branch'
         leafNodeClassName='node__leaf'
+        /* TODO: 초기 collapse 옵션 설정 기능 추가 */
         initialDepth={undefined}
         depthFactor={depthFactor}
       />
